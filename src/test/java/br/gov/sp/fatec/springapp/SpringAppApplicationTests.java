@@ -77,13 +77,13 @@ class SpringAppApplicationTests {
 
 	@Test
 	void testaAutorizacao() {
-		Usuario usuario = usuarioRepo.findById(20L).get();
+		Usuario usuario = usuarioRepo.findById(1L).get();
 		assertEquals("ROLE_ADMIN", usuario.getAutorizacoes().iterator().next().getNome());
 	}
 	
 	@Test
 	void testaUsuario() {
-		Autorizacao aut = autRepo.findById(15L).get();
+		Autorizacao aut = autRepo.findById(1L).get();
 		assertEquals("felipe", aut.getUsuarios().iterator().next().getNome());
 	}
 	
@@ -169,7 +169,7 @@ class SpringAppApplicationTests {
     // Consulta com 2 parâmetros -> EstrelaRepository
     @Test
     void buscaEstrelaPorNomeEIdQuery(){
-        Estrela estrela = estRepo.buscaEstrelaPorNomeEId("AM Her", 3);
+        Estrela estrela = estRepo.buscaEstrelaPorNomeEId("AM Her", 1);
         assertNotNull(estrela);    
     }
 
