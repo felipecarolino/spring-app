@@ -11,4 +11,7 @@ public interface EstrelaRepository extends JpaRepository<Estrela, Long> {
 
     @Query("select e from Estrela e where e.nome = ?1 and e.id = ?2")
     public Estrela buscaEstrelaPorNomeEId (String nome, long id);
+    
+    @Query("select e from Estrela e where e.nome like ?1%")
+    public Estrela buscarEstrelaPorNome (String nome);
 }

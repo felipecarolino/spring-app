@@ -13,25 +13,42 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonView;
+
+import br.gov.sp.fatec.springapp.controller.View;
+
 
 
 @Entity
 @Table(name = "est_estrela")
 public class Estrela {
+	@JsonView({View.UsuarioResumo.class, View.EstrelaResumo.class})
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "est_id")
 	private Long id;
+	
+	@JsonView({View.UsuarioResumo.class, View.EstrelaResumo.class})
 	@Column(name = "est_nome", unique = true, length = 100, nullable = false)
 	private String nome;
+	
+	@JsonView(View.EstrelaResumo.class)
 	@Column(name = "est_ra", length = 11, nullable = false)
 	private String ra;
+	
+	@JsonView(View.EstrelaResumo.class)
 	@Column(name = "est_dec", length = 12, nullable = false)
 	private String dec;
+	
+	@JsonView(View.EstrelaResumo.class)
 	@Column(name = "est_tipo", length = 10, nullable = false)
 	private String tipo;
+	
+	@JsonView(View.EstrelaResumo.class)
 	@Column(name = "est_data_hora", nullable = false)
 	private Date dataHora;
+	
+	@JsonView(View.EstrelaResumo.class)
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "usr_descobridor_id")
 	private Usuario descobridor;

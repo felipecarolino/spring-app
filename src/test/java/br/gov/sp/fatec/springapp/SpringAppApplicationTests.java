@@ -19,7 +19,8 @@ import br.gov.sp.fatec.springapp.repository.AutorizacaoRepository;
 import br.gov.sp.fatec.springapp.repository.EstrelaRepository;
 import br.gov.sp.fatec.springapp.repository.UsuarioRepository;
 import br.gov.sp.fatec.springapp.service.UsuarioService;
-import br.gov.sp.fatec.springapp.service.EstrelaService;
+import br.gov.sp.fatec.springapp.service.AutorizacaoService;
+//import br.gov.sp.fatec.springapp.service.EstrelaService;
 
 @SpringBootTest
 @Transactional
@@ -38,8 +39,11 @@ class SpringAppApplicationTests {
 	 @Autowired
 	 private UsuarioService usuarioService;
 	 
+//	 @Autowired
+//	 private EstrelaService estrelaService;
+	 
 	 @Autowired
-	 private EstrelaService estrelaService;
+	 private AutorizacaoService autorizacaoService;
 
 	@Test
 	void contextLoads() {
@@ -152,6 +156,12 @@ class SpringAppApplicationTests {
         List<Usuario> usuarios = usuarioRepo.buscaPorNomeAutorizacao("ROLE_ADMIN");
         assertFalse(usuarios.isEmpty());       
     }
+    
+    @Test
+    void testaServicoCriaAutorizacao(){
+        Autorizacao aut = autorizacaoService.novaAutorizacao("ROLE_USER", "felipe@mail.com");
+        assertNotNull(aut);
+    }
 
     @Test
     void testaServicoCriaUsuario(){
@@ -160,11 +170,11 @@ class SpringAppApplicationTests {
     }
 
     //Transação cria uma nova estrela e adiciona a estrela criada a um usuario. 
-    @Test
-    void testaServicoCriaEstrela(){
-        Estrela estrela = estrelaService.adicionarEstrela("felipe", "ASASSN -13ck", "00 11 33.70", "+04 52 04.75", "CV");
-        assertNotNull(estrela);
-    }
+//    @Test
+//    void testaServicoCriaEstrela(){
+//        Estrela estrela = estrelaService.adicionarEstrela("felipe", "ASASSN -13ck", "00 11 33.70", "+04 52 04.75", "CV");
+//        assertNotNull(estrela);
+//    }
 
     // Consulta com 2 parâmetros -> EstrelaRepository
     @Test
