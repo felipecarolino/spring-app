@@ -10,7 +10,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -37,7 +36,7 @@ public class Usuario {
 	private String senha;
 	
 	@JsonView(View.UsuarioResumo.class)
-	@ManyToMany(fetch = FetchType.EAGER)
+	@OneToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "uau_usuario_autorizacao",
 		joinColumns = { @JoinColumn(name = "usr_id") },
 		inverseJoinColumns = { @JoinColumn(name = "aut_id") }

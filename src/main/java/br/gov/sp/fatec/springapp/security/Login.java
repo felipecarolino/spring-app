@@ -1,6 +1,8 @@
 package br.gov.sp.fatec.springapp.security;
 
 public class Login {
+	private String id;
+	
 	private String username;
 	
 	private String password;
@@ -39,6 +41,14 @@ public class Login {
 
 	public void setAutorizacao(String autorizacao) {
 		this.autorizacao = autorizacao;
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
 	}
 
 }

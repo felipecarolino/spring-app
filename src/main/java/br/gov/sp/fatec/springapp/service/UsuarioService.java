@@ -20,5 +20,9 @@ public interface UsuarioService extends UserDetailsService {
 	public Usuario buscarPorNome(String nome);
 	
 	public Usuario deletarUsuario(Long id);
+	
+	public String buscarAut(String nome);
+	
+	public String buscarId(String nome);
 
 }

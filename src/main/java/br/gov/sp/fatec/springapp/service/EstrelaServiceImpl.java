@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import br.gov.sp.fatec.springapp.entity.Estrela;
 import br.gov.sp.fatec.springapp.entity.Usuario;
+import br.gov.sp.fatec.springapp.exception.RegistroDuplicadoException;
 import br.gov.sp.fatec.springapp.exception.RegistroNaoEncontradoException;
 import br.gov.sp.fatec.springapp.repository.EstrelaRepository;
 import br.gov.sp.fatec.springapp.repository.UsuarioRepository;
@@ -34,6 +35,11 @@ public class EstrelaServiceImpl implements EstrelaService {
 		if (usuario == null) {
 			throw new UsernameNotFoundException(
 					"Usuário com identificador " + idUsuario + " não foi encontrado");
+		}
+		
+		Estrela nomeExiste = estrelaRepo.buscarEstrelaPorNome(nome);
+		if (nomeExiste  != null) {
+			throw new RegistroDuplicadoException("Nome de estrela ja cadastrado!");
 		}
 		Estrela estrela = new Estrela();
 		estrela.setNome(nome);

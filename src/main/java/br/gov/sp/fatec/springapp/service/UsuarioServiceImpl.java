@@ -18,6 +18,7 @@ import org.springframework.security.core.userdetails.User;
 
 import br.gov.sp.fatec.springapp.entity.Autorizacao;
 import br.gov.sp.fatec.springapp.entity.Usuario;
+import br.gov.sp.fatec.springapp.exception.RegistroDuplicadoException;
 import br.gov.sp.fatec.springapp.exception.RegistroNaoEncontradoException;
 import br.gov.sp.fatec.springapp.repository.AutorizacaoRepository;
 import br.gov.sp.fatec.springapp.repository.UsuarioRepository;
@@ -41,6 +42,16 @@ public class UsuarioServiceImpl implements UsuarioService {
 			autorizacao = new Autorizacao();
 			autorizacao.setNome(nomeAutorizacao);
 			autorizacaoRepo.save(autorizacao);
+		}
+		
+		Usuario nomeExiste = usuarioRepo.findByNome(nome);
+		if (nomeExiste  != null) {
+			throw new RegistroDuplicadoException("Nome de usuario ja cadastrado!");
+		}
+		
+		Usuario emailExiste = usuarioRepo.buscarUsuarioPorEmail(email);
+		if (emailExiste  != null) {
+			throw new RegistroDuplicadoException("Email de usuario ja cadastrado!");
 		}
 		Usuario usuario = new Usuario();
 		usuario.setNome(nome);
@@ -134,5 +145,17 @@ public class UsuarioServiceImpl implements UsuarioService {
       }
 		
 		return User.builder().username(username).password(usuario.getSenha()).authorities(usuario.getAutorizacoes().stream().map(Autorizacao::getNome).collect(Collectors.toList()).toArray(new String[usuario.getAutorizacoes().size()])).build();
+	}
+
+	@Override
+	public String buscarAut(String nome) {
+		Usuario usuario = usuarioRepo.findByNome(nome);
+		return usuario.getAutorizacoes().iterator().next().getNome();
+	}
+
+	@Override
+	public String buscarId(String nome) {
+		Usuario usuario = usuarioRepo.findByNome(nome);
+		return usuario.getId().toString();
 	}
 }

@@ -14,6 +14,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 
 import br.gov.sp.fatec.springapp.security.JwtUtils;
 import br.gov.sp.fatec.springapp.security.Login;
+import br.gov.sp.fatec.springapp.service.UsuarioService;
 
 @RestController
 @RequestMapping(value = "/login")
@@ -23,14 +24,18 @@ public class LoginController {
 	@Autowired
 	private AuthenticationManager authManager;
 	
+	@Autowired
+	private UsuarioService usuarioService;
+	
 	@PostMapping()
 	public Login autenticar(@RequestBody Login login) throws JsonProcessingException {
-		
+				
 		Authentication auth = new UsernamePasswordAuthenticationToken(login.getUsername(), login.getPassword());
 		auth = authManager.authenticate(auth);
 		login.setPassword(null);
+		login.setAutorizacao(usuarioService.buscarAut(login.getUsername()));
 		login.setToken(JwtUtils.generateToken(auth));
-		
+		login.setId(usuarioService.buscarId(login.getUsername()));
 		return login;
 	}
 
